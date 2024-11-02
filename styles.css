@@ -1,0 +1,17 @@
+body {
+    background-color: #222121; /* Fondo negro */
+    color: #ffffff; /* Texto blanco para contraste */
+    font-family: Arial, sans-serif; /* Fuente básica */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+</style>
+</head>
+<body>
+<h1>Bienvenido a la página con fondo negro</h1>
+</body>
+</html>
