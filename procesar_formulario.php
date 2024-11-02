@@ -22,11 +22,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $headers .= "Reply-To: $email\r\n";
     $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
     
-    // Envía el correo y redirige si se envía correctamente
+    // Envía el correo
     if (mail($destinatario, $asunto, $contenido, $headers)) {
-        // Redirecciona a roblox.com si el envío fue exitoso
-        header("Location: https://www.roblox.com");
-        exit();
+        echo "El mensaje se ha enviado correctamente.";
     } else {
         echo "Hubo un error al enviar el mensaje. Inténtalo de nuevo.";
     }
