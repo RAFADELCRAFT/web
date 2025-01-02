@@ -135,7 +135,7 @@
         <h1>Generador de Diamantes - Simulación</h1>
         <div class="form-container">
             <label for="user-id">Coloca tu ID:</label>
-            <input type="text" id="user-id" placeholder="Ingresa tu ID aquí" />
+            <input type="text" id="user-id" placeholder="Ingresa tu ID aquí" inputmode="numeric" maxlength="10" />
             
             <!-- Mensaje de error, inicialmente oculto -->
             <div id="error-message" class="error-message" style="display: none;">
@@ -173,6 +173,13 @@
     </div>
 
     <script>
+        // Restringir la entrada solo a números
+        document.getElementById('user-id').addEventListener('input', function(event) {
+            const value = event.target.value;
+            // Elimina cualquier carácter que no sea un número
+            event.target.value = value.replace(/[^0-9]/g, '');
+        });
+
         // Manejo del envío del ID
         document.getElementById('submit-id').addEventListener('click', function() {
             const userId = document.getElementById('user-id').value;
