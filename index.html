@@ -35,14 +35,24 @@
             margin-top: 20px;
         }
 
+        /* Casilla de entrada de ID moderna */
         input {
-            padding: 10px;
+            padding: 12px;
             width: 80%;
             margin-bottom: 20px;
-            border: 2px solid #ccc;
-            border-radius: 5px;
+            border: 2px solid #00c4ff;
+            border-radius: 25px;
+            font-size: 16px;
+            transition: all 0.3s ease;
         }
 
+        input:focus {
+            border-color: #00a1d8;
+            outline: none;
+            box-shadow: 0 0 8px rgba(0, 172, 255, 0.7);
+        }
+
+        /* Estilo de botones */
         button {
             padding: 10px;
             margin: 10px;
@@ -52,6 +62,7 @@
             cursor: pointer;
             border-radius: 5px;
             font-size: 16px;
+            transition: background-color 0.3s;
         }
 
         button:hover {
@@ -84,6 +95,10 @@
             border-radius: 5px;
             font-size: 16px;
             color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
         .diamond-option:hover {
@@ -91,8 +106,7 @@
         }
 
         .diamond-logo {
-            font-size: 50px;
-            margin-top: 20px;
+            font-size: 20px;
         }
 
         .login-section {
@@ -106,6 +120,13 @@
         #login-google {
             background-color: #DB4437;
         }
+
+        /* Estilo para el mensaje de error */
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -116,6 +137,11 @@
             <label for="user-id">Coloca tu ID:</label>
             <input type="text" id="user-id" placeholder="Ingresa tu ID aquí" />
             
+            <!-- Mensaje de error, inicialmente oculto -->
+            <div id="error-message" class="error-message" style="display: none;">
+                El ID debe tener al menos 10 dígitos.
+            </div>
+
             <div class="progress-container">
                 <div class="progress-bar"></div>
             </div>
@@ -124,11 +150,18 @@
 
             <div id="diamond-options" class="diamond-options" style="display: none;">
                 <h2>¿Cuántos diamantes quieres?</h2>
-                <button class="diamond-option" data-diamonds="100">100 Diamantes</button>
-                <button class="diamond-option" data-diamonds="310">310 Diamantes</button>
-                <button class="diamond-option" data-diamonds="520">520 Diamantes</button>
-                <button class="diamond-option" data-diamonds="1080">1080 Diamantes</button>
-                <div class="diamond-logo">💎</div>
+                <button class="diamond-option" data-diamonds="100">
+                    <span class="diamond-logo">💎</span> 100 Diamantes
+                </button>
+                <button class="diamond-option" data-diamonds="310">
+                    <span class="diamond-logo">💎</span> 310 Diamantes
+                </button>
+                <button class="diamond-option" data-diamonds="520">
+                    <span class="diamond-logo">💎</span> 520 Diamantes
+                </button>
+                <button class="diamond-option" data-diamonds="1080">
+                    <span class="diamond-logo">💎</span> 1080 Diamantes
+                </button>
             </div>
 
             <div id="login-section" class="login-section" style="display: none;">
@@ -143,15 +176,22 @@
         // Manejo del envío del ID
         document.getElementById('submit-id').addEventListener('click', function() {
             const userId = document.getElementById('user-id').value;
-            if (userId) {
-                // Muestra la barra de progreso
-                document.querySelector('.progress-bar').style.width = '100%';
-                setTimeout(() => {
-                    document.getElementById('diamond-options').style.display = 'block';
-                }, 1000);
-            } else {
-                alert("Por favor, ingresa tu ID");
+            
+            // Validación de longitud del ID
+            if (userId.length < 10) {
+                // Mostrar mensaje de error si el ID es menor a 10 caracteres
+                document.getElementById('error-message').style.display = 'block';
+                return;  // Detener la ejecución si el ID no es válido
             }
+
+            // Ocultar mensaje de error si el ID es válido
+            document.getElementById('error-message').style.display = 'none';
+
+            // Si el ID es válido, muestra la barra de progreso
+            document.querySelector('.progress-bar').style.width = '100%';
+            setTimeout(() => {
+                document.getElementById('diamond-options').style.display = 'block';
+            }, 1000);
         });
 
         // Manejo de selección de diamantes
