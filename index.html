@@ -106,11 +106,11 @@
     <div class="moving-background"></div>
 
     <!-- Panel de ID de jugador -->
-    <div class="panel" id="idPanel">
-        <h2>Coloca tu ID de juego</h2>
-        <input type="text" id="userId" placeholder="COLOCA EL ID AQUI" maxlength="10" oninput="validateId()">
-        <button id="verifyBtn" onclick="verifyId()">Verificar ID</button>
-    </div>
+<div class="panel" id="idPanel">
+    <h2>Coloca tu ID de juego</h2>
+    <input type="text" id="userId" placeholder="Ejemplo: 1234567890" minlength="10" maxlength="12" oninput="validateId()" />
+    <button id="verifyBtn" onclick="verifyId()" disabled>Verificar ID</button>
+</div>
 
     <!-- Contenedor de armas (oculto inicialmente) -->
     <div class="weapons-container" id="weaponsContainer">
